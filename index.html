@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hola Mundo</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#120800;color:#fff;font-family:system-ui,Arial,sans-serif;min-height:100vh;display:flex;justify-content:center;padding:20px}
+.container{max-width:900px;width:100%}
+.hola{text-align:center;font-size:62px;font-weight:900;background:linear-gradient(90deg,#ff8c00,#ffb347,#ff3c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,122,0,.8));margin:30px 0}
+.card{background:rgba(0,0,0,.85);border:1px solid rgba(255,140,0,.35);border-radius:20px;padding:28px;margin-bottom:22px;box-shadow:0 0 30px rgba(255,140,0,.15)}
+.card h2{color:#ff8c00;text-align:center;margin-bottom:18px;text-shadow:0 0 10px rgba(255,140,0,.6)}
+.sub{color:#fff;font-weight:700;margin:16px 0 10px 0}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.tag{border:1px solid rgba(255,140,0,.45);background:rgba(255,140,0,.12);color:#ffb86a;padding:6px 14px;border-radius:20px;font-size:13px}
+.desc{color:#d1d5db;font-size:14px;line-height:1.7}
+.code{background:#1a1200;border:1px dashed rgba(255,140,0,.4);border-radius:10px;padding:12px;margin:10px 0;color:#ffcc80;font-family:monospace;font-size:13px;white-space:pre-wrap}
+.highlight{color:#ff8c00;font-weight:700}
+</style>
+</head>
+<body>
+<div class="container">
+<p class="hola">Hola Mundo.</p>
+
+<div class="card">
+<h2>Stack Tecnológico</h2>
+<p class="sub">Stack de Desarrollo</p>
+<div class="tags">
+<span class="tag">React + TypeScript</span>
+<span class="tag">Tailwind CSS</span>
+<span class="tag">Vite</span>
+<span class="tag">Firebase</span>
+<span class="tag">Firestore</span>
+<span class="tag">Estilos Neón Anaranjado</span>
+<span class="tag">Código Modular</span>
+<span class="tag">Microservicios</span>
+</div>
+</div>
+
+<div class="card">
+<h2>🚀 GITHUB Deploy Automático (.github/workflows)</h2>
+<p class="desc">Deploy automático configurado con GitHub Actions. Cada push a <span class="highlight">main</span> despliega a Firebase Hosting.</p>
+<p class="sub">Archivo:.github/workflows/deploy.yml</p>
+<div class="code">on: push branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          channelId: live
+</div>
+</div>
+
+<div class="card">
+<h2>🔑 Google Cloud.json - Clave Secreta</h2>
+<p class="desc">Archivo clave de servicio para autenticar GitHub con Firebase. <span class="highlight">NO subir al repo</span>, va como Secret en GitHub.</p>
+<p class="sub">Pasos:</p>
+<p class="desc">1. Google Cloud Console > IAM > Service Accounts > Keys > Create JSON<br>
+2. GitHub > Settings > Secrets > Actions > New Secret<br>
+3. Nombre: FIREBASE_SERVICE_ACCOUNT<br>
+4. Pegar contenido del.json</p>
+<div class="code">Settings > Secrets and variables > Actions
+Secret: FIREBASE_SERVICE_ACCOUNT_TU_PROYECTO
+Valor: { "type": "service_account", "project_id": "..." }</div>
+</div>
+
+<div class="card">
+<h2>🧪 Testing Emuladores Firebase desde GITHUB/workflows</h2>
+<p class="desc">Tests automáticos con emuladores antes del deploy.</p>
+<div class="code">- name: Testing Emuladores Firebase
+  run: |
+    npm install -g firebase-tools
+    firebase emulators:exec --only hosting "npm test"
+    # o firebase emulators:exec --only firestore,hosting "echo OK"</div>
+<p class="desc">Esto garantiza que el hosting y las rules funcionan antes de subir a producción.</p>
+</div>
+
+</div>
+</body>
+</html>
